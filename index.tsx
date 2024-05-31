@@ -1,47 +1,49 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
+import {
+  Box, Typography,
+} from '@mui/material';
 
-class UserProfile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userId: '123',
-      userData: null,
-      loading: true
-    };
-  }
-
-  componentDidMount() {
-    fetch(`https://api.example.com/users/${this.state.userId}`)
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ userData: data, loading: false });
-      })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
-        this.setState({ loading: false });
-      });
-  }
-
-  render() {
-    const { loading, userData } = this.state;
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-
-    return (
-      <div>
-        <h1>User Profile</h1>
-        {userData ? (
-          <div>
-            <p>Name: {userData.name}</p>
-            <p>Email: {userData.email}</p>
-          </div>
-        ) : (
-          <p>No user data available.</p>
-        )}
-      </div>
-    );
-  }
+interface UserProfileProps {
+  user?: any | null
 }
 
-export default UserProfile;
+interface UserPayload {
+  id: string
+  email: string
+  name: string
+  tags: string[]
+}
+
+export default function UserProfile(props: UserProfileProps) {
+  const [loading, setLoading] = useState(true);
+  const [tags, setTags] = useState([])
+  const user = props.user
+  
+  useEffect(() => {
+    fetch(`https://api.example.com/users/${user.id}`)
+      .then(response => response.json())
+      .then(json => {
+        const data = json as UserPayload
+        setLoading(false);
+        const divs = data.tags.map((tag)=> {
+          return (<Typography variant='h2'>{tag}</Typography>)
+        })
+        setTags(divs)
+      })
+  })
+  
+  return (loading ? 
+          <div>Loading...</div> : 
+          <Box sx={{ marginTop: '24px' }}>
+            <Typography variant='h1'>User Profile</Typography>
+            {user ? (
+              <div>
+                <Typography variant='p' sx={{color: 'darkgrey'}}>Name: {user.name}</Typography>
+                <Typography variant='p' sx={{color: 'darkgrey'}}>Email: {user.email}</Typography>
+                {tagDiv}
+              </div>
+            ) : (
+              <Typography variant='p'>No user data available.</Typography>
+            )}
+          </Box>)
+}
