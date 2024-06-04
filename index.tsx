@@ -3,47 +3,42 @@ import {
   Box, Typography,
 } from '@mui/material';
 
-interface UserProfileProps {
-  user?: any | null
+interface PollPayload {
+  list: {color: string, votes: number}[]
 }
 
-interface UserPayload {
-  id: string
-  email: string
-  name: string
-  tags: string[]
+interface FormPayload {
+  email: string,
+  colors: string[]
 }
 
-export default function UserProfile(props: UserProfileProps) {
+export default function CampaignPage() {
   const [loading, setLoading] = useState(true);
-  const [tags, setTags] = useState([])
+  const [result, setResult] = useState([])
   const user = props.user
   
-  useEffect(() => {
-    fetch(`https://api.example.com/users/${user.id}`)
+  const onSubmit = (paylaod: FormPayload) => {
+    fetch(`https://api.example.com/poll-vote`, {
+      body: {
+        email: payload.email,
+        colors: payload.colors
+      }
+    })
       .then(response => response.json())
       .then(json => {
-        const data = json as UserPayload
+        const data = json as PollPayload
         setLoading(false);
-        const divs = data.tags.map((tag)=> {
-          return (<Typography variant='h2'>{tag}</Typography>)
+        const divs = data.list.map((row)=> {
+          return (<Typography variant='h2'>{row.color} {row.votes}</Typography>)
         })
-        setTags(divs)
+        setResult(divs)
       })
-  })
+  }
   
   return (loading ? 
           <div>Loading...</div> : 
           <Box sx={{ marginTop: '24px' }}>
-            <Typography variant='h1'>User Profile</Typography>
-            {user ? (
-              <div>
-                <Typography variant='p' sx={{color: 'darkgrey'}}>Name: {user.name}</Typography>
-                <Typography variant='p' sx={{color: 'darkgrey'}}>Email: {user.email}</Typography>
-                {tagDiv}
-              </div>
-            ) : (
-              <Typography variant='p'>No user data available.</Typography>
-            )}
+            <Img id='banner' />
+            {result ? result : <CampaignForm onSubmit={onSubmit} />}
           </Box>)
 }
