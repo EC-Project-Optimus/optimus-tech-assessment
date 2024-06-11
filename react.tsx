@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 
 interface PollPayload {
   list: {color: string, votes: number}[]
@@ -9,8 +9,8 @@ interface FormPayload {
   colors: string[]
 }
 
-interface CamapaignFormProps {
-  handleSumit: (FormPayload) => void
+interface CampaignFormProps {
+  handleSubmit: (FormPayload) => void
 }
 
 const CampaignForm = (props: CampaignFormProps) => {
@@ -22,7 +22,7 @@ const CampaignForm = (props: CampaignFormProps) => {
             <label>
                 Email:
                 <input
-                    type="email"
+                    type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
@@ -31,7 +31,7 @@ const CampaignForm = (props: CampaignFormProps) => {
                 Favorite Color:
                 <select
                     multiple
-                    value={color}
+                    value={colors}
                     onChange={(e) => setColors(e.target.value)}
                 >
                     <option value="" disabled>Select a color</option>
@@ -40,7 +40,7 @@ const CampaignForm = (props: CampaignFormProps) => {
                     <option value="blue">Blue</option>
                 </select>
             </label>
-            <button onClick={handleSubmit({email, colors})}>Submit</button>
+            <button onClick={props.handleSubmit({email, colors})}>Submit</button>
         </div>
     );
 };
@@ -48,12 +48,12 @@ const CampaignForm = (props: CampaignFormProps) => {
 function App() {
   const [result, setResult] = useState([])
   
-  const handleSumit = (paylaod: FormPayload) => {
+  const handleSubmit = (payload: FormPayload) => {
     fetch(`https://api.example.com/poll-vote`, {
-      body: {
+      body: JSON.stringify({
         email: payload.email,
         colors: payload.colors
-      }
+      })
     })
       .then(response => response.json())
       .then(json => {
@@ -67,7 +67,7 @@ function App() {
   
   return <Box>
             <Img id='banner' sx={{ marginBottom: '24px' }} />
-            {result ? result : <CampaignForm handleSumit={handleSumit} />}
+            {result ? result : <CampaignForm handleSubmit={handleSubmit} />}
          </Box>
 }
 

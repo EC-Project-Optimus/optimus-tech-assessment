@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import express from "express";
 import { Request, Response } from "express";
-import {Column, DataSource, Entity, In, PrimaryColumn, PrimaryGeneratedColumn, Unique} from "typeorm";
+import {Column, DataSource, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 
 const db = new DataSource({type: "postgres"})
@@ -47,9 +47,9 @@ app.get('/poll-result', async (req: Request, res: Response) => {
 
   const responseBody = []
   for (const [colorId, votes] of Object.entries(results)) {
-    const color = await db.getRepository(Color).findById(vote.colorId)
-    respondBody.push({
-      color: color.value,
+    const color = await db.getRepository(Color).findOneById(colorId)
+    responseBody.push({
+      color: color!.value,
       votes
     })
   }
@@ -65,23 +65,23 @@ interface PollVoteInput {
 app.post('/poll-vote',  async (req: Request, res: Response) => {
   const body = req.body as PollVoteInput
   
-  let user = await db.getRepository(User).find({where: {email: body.email }})
+  let user = await db.getRepository(User).findOneBy({email: body.email })
   if (user) {
     throw new Error('User exist already')
   }
   
-  user = await db.getRepository(User).create({email: body.email})
-  
-  for (const vote of body.color) {
-    const color = await db.getRepository(Color).create({email: body.color})
+  user = await db.getRepository(User).save({email: body.email })
+
+  for (const colorName of body.colors) {
+    const color = await db.getRepository(Color).findOneBy({value: colorName})
     if (!color) {
       throw new Error('Color does not exist')
     }
     await db.getRepository(Vote)
-      .create({userId: user.id, colorId: vote})
+      .save({userId: user.id, colorId: color.id})
   }
 })
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(3000, () => {
+  console.log(`Server running on http://localhost:3000`);
 });
