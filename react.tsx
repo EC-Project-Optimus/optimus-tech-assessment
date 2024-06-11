@@ -50,7 +50,6 @@ const CampaignForm = (props: CampaignFormProps) => {
 
 function App() {
   const [result, setResult] = useState([])
-  const user = props.user
   
   const handleSumit = (paylaod: FormPayload) => {
     fetch(`https://api.example.com/poll-vote`, {
