@@ -1,8 +1,10 @@
 import "reflect-metadata";
-import { Repository } from 'typeorm';
-import express from 'express';
-import { Request, Response } from 'express';
+import express from "express";
+import { Request, Response } from "express";
+import {Column, DataSource, Entity, In, PrimaryColumn, PrimaryGeneratedColumn, Unique} from "typeorm";
 
+
+const db = new DataSource({type: "postgres"})
 const app = express();
 
 app.use(express.json());

@@ -1,7 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
-import {
-  Box, Typography,
-} from '@mui/material';
+import React, { useState, useMemo } from 'react';
 
 interface PollPayload {
   list: {color: string, votes: number}[]
