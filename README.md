@@ -1,4 +1,4 @@
-# optimus-tech-accessment
+# optimus-tech-assessment
 
 Given you are a senior developer, one of your colleagues requests your review of this PR.
 Please ask questions and provide feedback in this PR.
