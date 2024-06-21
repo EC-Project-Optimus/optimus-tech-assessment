@@ -5,12 +5,17 @@
   "repository": "git@github.com:tmak-ec/optimus-tech-accessment.git",
   "author": "Tin Mak <tmak@evercommerce.com>",
   "license": "MIT",
+  "scripts": {
+    "start:api": "ts-node api.ts"
+  },
   "dependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "express": "^4.19.2",
     "http-errors": "^2.0.0",
     "react": "^18.3.1",
+    "sqlite3": "^5.1.7",
+    "ts-node": "^10.9.2",
     "typeorm": "^0.3.20",
     "typescript": "^5.4.5"
   },
