@@ -17,3 +17,28 @@ Including:
 Given a user submitted the poll, the form is replaced by the poll result.
 Each email can only submit poll once.
 The result should show the number of total votes for each colour
+
+### Instructions for Running the Code
+
+#### Backend:
+
+1. Open a new terminal and run the following commands from the root directory:
+    ```bash
+    yarn install
+    yarn run start:api
+    ```
+
+#### Frontend:
+
+1. Open a new terminal and run the following commands in root directory:
+    ```bash
+    cd frontend
+    yarn install
+    yarn proxy
+    ```
+
+2. Open another terminal and run following commands in root directory:
+    ```bash
+    cd frontend
+    yarn start
+    ```

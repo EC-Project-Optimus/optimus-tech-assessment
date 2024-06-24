@@ -97,6 +97,8 @@ app.post('/poll-vote',  async (req: Request, res: Response) => {
     await db.getRepository(Vote)
       .save({userId: user.id, colorId: color.id})
   }
+
+  res.status(200).send();
 })
 
 app.listen(3000, () => {
