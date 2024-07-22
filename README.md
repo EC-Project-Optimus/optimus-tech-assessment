@@ -1,26 +1,30 @@
 # optimus-tech-assessment
 
-## Summary
-We need to build a poll system for a one-time marketing campaign for English and French users.
-User can input their email and select their favourite colours.
-And then the result of everyone's poll will be presented.
+This repo represents a very simple solution for collecting poll submissions and displaying the
+current results.
 
-### Requirement 1
-Given a user open the link in the marketing campaign email, a page of campaign is shown.
-Including:
- - a banner
- - a form
- - text input of user email
- - multi-select input of colours 
+The issue is that the solution is too simple, and it has some limitations.
 
-### Requirement 2
-Given a user submitted the poll, the form is replaced by the poll result.
-Each email can only submit poll once.
-The result should show the number of total votes for each colour
+Please take some time to review the code before your interview. There isn't much, and you likely
+won't need more than 15 minutes to review what's here and to understand it.
 
-### Instructions for Running the Code
+In your interview you will meet a few members of the development team and will be asked to talk
+through what you would do to improve this solution.
 
-#### Backend:
+# Summary
+We need to build a form that will ask users to select their favourite colors from a list. Upon submitting
+the form, the UI will change to display the current totals for each possible color.
+
+## Detailed Requirements
+1. Display an input form that collects: email address, and multi-select input of colors
+1. Upon submitting the form, the UI changes to diplay the list of colors and the current counts
+1. The form can only be submitted once per user  
+1. The UI should support both English and French languages
+
+
+# Instructions for Running the Code
+
+## Backend:
 
 1. Open a new terminal and run the following commands from the root directory:
     ```bash
@@ -28,7 +32,7 @@ The result should show the number of total votes for each colour
     yarn run start:api
     ```
 
-#### Frontend:
+## Frontend:
 
 1. Open a new terminal and run the following commands in root directory:
     ```bash
